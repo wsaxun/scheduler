@@ -1,0 +1,14 @@
+AMQP_URI: 'pyamqp://guest:guest@172.17.0.3'
+WEB_SERVER_ADDRESS: '0.0.0.0:5000'
+rpc_exchange: 'nameko-rpc'
+max_workers: 10
+parent_calls_tracked: 10
+
+LOGGING:
+    version: 1
+    handlers:
+        console:
+            class: logging.StreamHandler
+    root:
+        level: INFO
+        handlers: [console]
