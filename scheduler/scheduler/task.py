@@ -18,6 +18,21 @@ def retry(retry_num=3, delay=5):
                 else:
                     time.sleep(delay)
                     n += 1
+                    now = datetime.now()
+                    min_time = datetime.strptime(
+                        '{0}-{1}-{2} {3}:{4}'.format(now.year, now.month,
+                                                     now.day,
+                                                     kwargs.get(
+                                                         'start_time').strip().split(
+                                                         ':')[0],
+                                                     kwargs.get(
+                                                         'start_time').strip().split(
+                                                         ':')[1]),
+                        '%Y-%m-%d %H:%M')
+                    max_time = min_time + timedelta(
+                        hours=kwargs.get('duration'))
+                    if not min_time <= now <= max_time:
+                        break
             return result
 
         return inner
@@ -46,24 +61,30 @@ def start_backup(*args, duration=None, start_time=None, policy_name=None,
         '%Y-%m-%d %H:%M')
     max_time = min_time + timedelta(hours=duration)
     if not min_time <= now <= max_time:
-        print({'status': 'fail', 'msg': 'can not execute at this time'})
-        return {'status': 'fail', 'msg': 'can not execute at this time'}
+        print({'status': 'fail', 'description': 'can not execute at this time',
+               'code': 500})
+        return {'status': 'fail', 'description': 'can not execute at this time',
+                'code': 500}
     url_kwargs.update(policy_name=policy_name)
     try:
         response = requests.post(start_backup_url, data=url_kwargs,
                                  timeout=request_timeout)
         if not 200 <= response.status_code <= 399:
-            print({'status': 'fail', 'msg': 'remote host execute error'})
-            return {'status': 'fail', 'msg': 'remote host execute error'}
-        result = {'status': 'success', 'data': response.json()}
+            print({'status': 'fail', 'description': 'remote host execute error',
+                   'code': 500})
+            return {'status': 'fail',
+                    'description': 'remote host execute error', 'code': 500}
+        result = {'status': 'success', 'description': response.json()}
     except requests.exceptions.ConnectTimeout:
         print({'status': 'fail',
-               'msg': 'ConnectTimeout {0} seconds'.format(request_timeout)})
+               'description': 'ConnectTimeout {0} seconds'.format(
+                   request_timeout), 'code': 500})
         return {'status': 'fail',
-                'msg': 'ConnectTimeout {0} seconds'.format(request_timeout)}
+                'description': 'ConnectTimeout {0} seconds'.format(
+                    request_timeout), 'code': 500}
     except Exception:
-        print({'status': 'fail', 'msg': 'unknown error'})
-        return {'status': 'fail', 'msg': 'unknown error'}
+        print({'status': 'fail', 'description': 'unknown error', 'code': 500})
+        return {'status': 'fail', 'description': 'unknown error', 'code': 500}
 
     print(datetime.now())
     print(result)
