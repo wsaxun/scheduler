@@ -1,6 +1,6 @@
 from functools import wraps
 from apscheduler.job import Job
-from schedulerConfig import misfire
+from .schedulerConfig import misfire
 
 
 def serialization_result(func):

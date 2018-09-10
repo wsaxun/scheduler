@@ -1,8 +1,5 @@
 from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
 from apscheduler.executors.pool import ThreadPoolExecutor
-import pymysql
-
-pymysql.install_as_MySQLdb()
 
 job_stores = {
     'default': SQLAlchemyJobStore(

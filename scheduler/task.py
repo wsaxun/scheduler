@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 import time
 import requests
 from functools import wraps
-from schedulerConfig import start_backup_url, request_timeout
+from .schedulerConfig import start_backup_url, request_timeout
 
 
 def retry(retry_num=3, delay=5):

@@ -1,9 +1,9 @@
 import apscheduler
 from nameko.rpc import rpc
-from decorators import (check_start_backup_param, serialization_result)
+from .decorators import (check_start_backup_param, serialization_result)
 from apscheduler.triggers.interval import IntervalTrigger
-from dependencies import Scheduler as DepScheduler
-from task import *
+from .dependencies import Scheduler as DepScheduler
+from .task import *
 
 
 class Scheduler:
