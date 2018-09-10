@@ -21,7 +21,7 @@
 > 通过nameko的rpc调用，服务名'scheduler'
 
 ###### 请求参数
-> |参数|必选|类型|说明|
+|参数|必选|类型|说明|
 |:---|:---|:---|:---|
 |scheduler_id|True|str|scheduler id，全局唯一|
 |policy_name|True|str|policy name|
@@ -32,7 +32,7 @@
 |**url_kwargs|False||其他传递过来的关键字参数|
 
 ###### 返回参数
-> |参数|类型|说明|
+|参数|类型|说明|
 |:---|:---|:---|
 |status|str|状态， 'success' or 'fail'|
 |description|str or dict|失败时返回str， 成功时返回dict，参数为：job_id,func,args,kwargs,misfire_grace_time,next_run_time|
@@ -51,7 +51,7 @@
 > 通过nameko的rpc调用，服务名'scheduler'
 
 ###### 请求参数
-> |参数|必选|类型|说明|
+|参数|必选|类型|说明|
 |:---|:---|:---|:---|
 |scheduler_id|True|str|scheduler id，全局唯一|
 |policy_name|True|str|policy name|
@@ -62,7 +62,7 @@
 |**url_kwargs|False||其他传递过来的关键字参数|
 
 ###### 返回参数
-> |参数|类型|说明|
+|参数|类型|说明|
 |:---|:---|:---|
 |status|str|状态， 'success' or 'fail'|
 |description|str or dict|失败时返回str， 成功时返回dict，参数为：job_id,func,args,kwargs,misfire_grace_time,next_run_time|
@@ -81,12 +81,12 @@
 > 通过nameko的rpc调用，服务名'scheduler'
 
 ###### 请求参数
-> |参数|必须|类型|说明|
+|参数|必须|类型|说明|
 |:--- |:---|:---|:--- |
 |scheduler_id|True|str|scheduler的id|
 
 ###### 返回参数
-> |参数|类型|说明|
+|参数|类型|说明|
 |:---|:---|:---|
 |status|str|状态， 'success' or 'fail'|
 |description|str or dict|失败时返回str， 成功时返回dict，参数为：job_id,func,args,kwargs,misfire_grace_time,next_run_time|
@@ -105,12 +105,12 @@
 > 通过nameko的rpc调用
 
 ###### 请求参数
-> |参数|必须|类型|说明|
+|参数|必须|类型|说明|
 |:--- |:---|:---|:--- |
 |scheduler_id|True|str|scheduler的id|
 
 ###### 返回参数
-> |参数|类型|说明|
+|参数|类型|说明|
 |:---|:---|:---|
 |status|str|状态， 'success' or 'fail'|
 |description|str or dict|失败时返回str， 成功时返回dict，参数为：job_id,func,args,kwargs,misfire_grace_time,next_run_time|
@@ -129,12 +129,12 @@
 > 通过nameko的rpc调用，服务名'scheduler'
 
 ###### 请求参数
-> |参数|必须|类型|说明|
+|参数|必须|类型|说明|
 |:--- |:---|:---|:--- |
 |scheduler_id|True|str|scheduler的id|
 
 ###### 返回参数
-> |参数|类型|说明|
+|参数|类型|说明|
 |:---|:---|:---|
 |status|str|状态， 'success' or 'fail'|
 |description|str or dict|失败时返回str， 成功时返回dict，参数为：job_id,func,args,kwargs,misfire_grace_time,next_run_time|
@@ -153,12 +153,12 @@
 > 通过nameko的rpc调用，服务名'scheduler'
 
 ###### 请求参数
-> |参数|必须|类型|说明|
+|参数|必须|类型|说明|
 |:--- |:---|:---|:--- |
 |scheduler_id|True|str|scheduler的id|
 
 ###### 返回参数
-> |参数|类型|说明|
+|参数|类型|说明|
 |:---|:---|:---|
 |status|str|状态， 'success' or 'fail'|
 |description|str or dict|失败时返回str， 成功时返回dict，参数为：job_id,func,args,kwargs,misfire_grace_time,next_run_time|
