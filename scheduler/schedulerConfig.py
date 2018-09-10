@@ -1,5 +1,5 @@
 from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
-from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
+from apscheduler.executors.pool import ThreadPoolExecutor
 import pymysql
 
 pymysql.install_as_MySQLdb()
@@ -10,7 +10,6 @@ job_stores = {
 }
 executors = {
     'default': ThreadPoolExecutor(50),
-    'process_pool': ProcessPoolExecutor(5)
 }
 job_defaults = {
     'coalesce': True,

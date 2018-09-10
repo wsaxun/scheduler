@@ -1,9 +1,9 @@
 import apscheduler
 from nameko.rpc import rpc
 from decorators import (check_start_backup_param, serialization_result)
-from task import *
 from apscheduler.triggers.interval import IntervalTrigger
 from dependencies import Scheduler as DepScheduler
+from task import *
 
 
 class Scheduler:
@@ -13,8 +13,8 @@ class Scheduler:
     @staticmethod
     def _generator_id(policy_name):
         time_stamp = str(round(time.time() * 1000))
-        sched_id = 'scheduler_' + policy_name + '_' + time_stamp
-        return sched_id
+        scheduler_id = 'scheduler_' + policy_name + '_' + time_stamp
+        return scheduler_id
 
     @staticmethod
     def _execute_scheduler(func, *args, **kwargs):
@@ -82,12 +82,12 @@ class Scheduler:
     #     :param url_kwargs:
     #     :return: dict
     #     """
-    #     sched_id = self._generator_id(policy_name)
+    #     scheduler_id = self._generator_id(policy_name)
     #     trigger = self._generator_trigger(cron)
     #     kwargs = self._generator_kwargs(policy_name, duration,
     #                                     start_time, url_kwargs)
     #     scheduler_result = self._execute_scheduler(scheduler.add_job,
-    #                                                start_backup, id=sched_id,
+    #                                                start_backup, id=scheduler_id,
     #                                                trigger=trigger,
     #                                                misfire_grace_time=misfire_grace_time,
     #                                                kwargs=kwargs)
@@ -96,13 +96,13 @@ class Scheduler:
     # @serialization_result
     # @check_start_backup_param
     # @rpc
-    # def modify_start_backup_job(self, sched_id, policy_name=None, cron=None,
+    # def modify_start_backup_job(self, scheduler_id, policy_name=None, cron=None,
     #                             start_time=None, duration=None,
     #                             misfire_grace_time=None,
     #                             **url_kwargs):
     #     """
     #     modify scheduler job by job' id
-    #     :param sched_id: str
+    #     :param scheduler_id: str
     #     :param policy_name: str
     #     :param cron: str
     #     :param duration: int
@@ -115,7 +115,7 @@ class Scheduler:
     #     kwargs = self._generator_kwargs(policy_name, duration,
     #                                     start_time, url_kwargs)
     #     scheduler_result = self._execute_scheduler(scheduler.modify_job,
-    #                                                sched_id,
+    #                                                scheduler_id,
     #                                                trigger=trigger,
     #                                                misfire_grace_time=misfire_grace_time,
     #                                                kwargs=kwargs)
@@ -124,7 +124,8 @@ class Scheduler:
     @serialization_result
     @check_start_backup_param
     @rpc
-    def add_scheduler_start_backup_job_by_interval(self, sched_id, policy_name,
+    def add_scheduler_start_backup_job_by_interval(self, scheduler_id,
+                                                   policy_name,
                                                    days=None,
                                                    start_time=None,
                                                    duration=None,
@@ -132,6 +133,7 @@ class Scheduler:
                                                    **url_kwargs):
         """
         add scheduler start_backup job by cron
+        :param scheduler_id: str
         :param days: int
         :param duration: int
         :param start_time: str like '01:00'
@@ -146,7 +148,8 @@ class Scheduler:
                                         start_time, url_kwargs)
         first_run_time = self._generator_first_running_time(start_time)
         scheduler_result = self._execute_scheduler(self.scheduler.add_job,
-                                                   start_backup, id=sched_id,
+                                                   start_backup,
+                                                   id=scheduler_id,
                                                    trigger=trigger,
                                                    next_run_time=first_run_time,
                                                    misfire_grace_time=misfire_grace_time,
@@ -156,14 +159,15 @@ class Scheduler:
     @serialization_result
     @check_start_backup_param
     @rpc
-    def modify_start_backup_job_by_interval(self, sched_id, policy_name=None,
+    def modify_start_backup_job_by_interval(self, scheduler_id,
+                                            policy_name=None,
                                             days=None,
                                             start_time=None, duration=None,
                                             misfire_grace_time=None,
                                             **url_kwargs):
         """
         modify scheduler job by job' id
-        :param sched_id: str
+        :param scheduler_id: str
         :param policy_name: str
         :param days: int
         :param duration: int
@@ -177,7 +181,7 @@ class Scheduler:
                                         start_time, url_kwargs)
         first_run_time = self._generator_first_running_time(start_time)
         scheduler_result = self._execute_scheduler(self.scheduler.modify_job,
-                                                   sched_id,
+                                                   scheduler_id,
                                                    trigger=trigger,
                                                    next_run_time=first_run_time,
                                                    misfire_grace_time=misfire_grace_time,
@@ -186,49 +190,49 @@ class Scheduler:
 
     @serialization_result
     @rpc
-    def pause_job(self, sched_id):
+    def pause_job(self, scheduler_id):
         """
         pause job by job's id
-        :param sched_id: str
+        :param scheduler_id: str
         :return: dict
         """
         scheduler_result = self._execute_scheduler(self.scheduler.pause_job,
-                                                   sched_id)
+                                                   scheduler_id)
         return scheduler_result
 
     @serialization_result
     @rpc
-    def resume_job(self, sched_id):
+    def resume_job(self, scheduler_id):
         """
         resume job by job' id
-        :param sched_id: str
+        :param scheduler_id: str
         :return: dict
         """
         scheduler_result = self._execute_scheduler(self.scheduler.resume_job,
-                                                   sched_id)
+                                                   scheduler_id)
         return scheduler_result
 
     @rpc
-    def remove_job(self, sched_id):
+    def remove_job(self, scheduler_id):
         """
         remove job by job's id
-        :param sched_id: str
+        :param scheduler_id: str
         :return: dict
         """
         scheduler_result = self._execute_scheduler(self.scheduler.remove_job,
-                                                   sched_id)
+                                                   scheduler_id)
         return scheduler_result
 
     @serialization_result
     @rpc
-    def get_job(self, sched_id):
+    def get_job(self, scheduler_id):
         """
         get some jobs by job's id
-        :param sched_id: str
+        :param scheduler_id: str
         :return: dict
         """
         scheduler_result = self._execute_scheduler(self.scheduler.get_job,
-                                                   sched_id)
+                                                   scheduler_id)
         return scheduler_result
 
     @serialization_result

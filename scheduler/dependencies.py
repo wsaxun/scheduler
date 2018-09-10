@@ -8,13 +8,14 @@ class Scheduler(DependencyProvider):
     def setup(self):
         logging.getLogger('apscheduler.executors.default').setLevel(
             logging.WARNING)
-        self.scheduler = BackgroundScheduler(jobstores=job_stores,
-                                             executors=executors,
-                                             job_defaults=job_defaults)
+        scheduler = BackgroundScheduler(jobstores=job_stores,
+                                        executors=executors,
+                                        job_defaults=job_defaults)
+        setattr(self, 'scheduler', scheduler)
         self.scheduler.start()
 
     def get_dependency(self, worker_ctx):
         return self.scheduler
 
     def stop(self):
-        self.scheduler.stop()
+        self.scheduler.shutdown()
